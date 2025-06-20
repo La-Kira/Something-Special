@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700&family=Quicksand:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a2c9b6e608.js" crossorigin="anonymous"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #b5a0ff, #ffc0f3, #a0d2ff);
+      font-family: 'Quicksand', sans-serif;
+      color: white;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
+      margin-top: 0.3em;
+      margin-bottom: 0.5em;
+      letter-spacing: 0.03em;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px 30px;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      margin: 20px auto;
+      width: 90%;
+      max-width: 700px;
+    }
+
+    .message, .gallery, .video, .personal {
+      display: none;
+      animation: fadeIn 1.5s ease-in-out forwards;
+    }
+
+    .auth-wrapper {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    input[type="date"], button {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 300px;
+      margin: 10px auto;
+      display: block;
+    }
+
+    button {
+      background: linear-gradient(to right, #a287f4, #f497d3);
+      color: white;
+      cursor: pointer;
+    }
+
+    .stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .star {
+      width: 3px; height: 3px;
+      background: white;
+      position: absolute;
+      border-radius: 50%;
+      animation: twinkle 2s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .icon-title { margin-bottom: 10px; }
+    .icon-title i { margin-right: 8px; }
+
+    .gallery-flex {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    img, video {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 15px;
+      margin-top: 10px;
+      cursor: zoom-in;
+      transition: transform 0.3s ease;
+    }
+
+    img:hover, video:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+
+    @media (min-width: 768px) {
+      img, video {
+        width: 45%;
+      }
+    }
+
+    /* Modal Zoom */
+    #mediaModal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    #mediaModal img, #mediaModal video {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+
+    #mediaModal span {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2em;
+      color: white;
+      cursor: pointer;
+    }
+
+    .hidden { display: none; }
+
+    /* Toast message */
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 50, 80, 0.9);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: bold;
+      z-index: 2000;
+      box-shadow: 0 0 10px rgba(255, 50, 80, 0.4);
+      animation: fadeToast 0.3s ease;
+    }
+
+    @keyframes fadeToast {
+      from { opacity: 0; transform: translate(-50%, -10px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+    
+    @media (min-width: 768px) {
+  .auth-wrapper .container {
+    max-width: 360px;
+    }
+    
+  .dreamy-image {
+    display: block;
+    margin: 1.5rem auto 0;
+    width: 60%;
+    max-width: 250px;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 20px rgba(173, 216, 230, 0.5);
+    animation: fadeInImage 2s ease-in-out;
+    transition: transform 0.3s ease;
+    }
+
+ .dreamy-image:hover {
+    transform: scale(1.05);
+  }
+
+  @keyframes fadeInImage {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+    }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    }
+  }
+
+/* ✅ Tambahan: Responsive tweaks */
+  @media (max-width: 600px) {
+  .dreamy-image {
+    width: 80%;
+    max-width: 200px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+  .dreamy-image {
+    width: 50%;
+    max-width: 300px;
+    }
+  }
+  
+  .my-message {
+    text-align: center;
+    margin-top: 1.5rem;
+    }
+
+  .message-image {
+    display: block;
+    margin: 1rem auto 0;
+    width: 60%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 1rem;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeInImage 1.5s ease-in-out;
+    transition: transform 0.3s ease;
+    }
+
+  .message-image:hover {
+    transform: scale(1.03);
+    }
+
+  @keyframes fadeInImage {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+    }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    }
+  }
+
+/* Responsif tambahan (opsional) */
+  @media (max-width: 600px) {
+  .message-image {
+    width: 80%;
+    max-width: 220px;
+    }
+  }
+  </style>
+</head>
+<body>
+  
+<div class="stars"></div>
+
+<!-- Auth -->
+<div class="auth-wrapper">
+  <div class="container" id="authBox">
+    <h1>What's Your Birthday?</h1>
+    <input type="date" id="dobInput" />
+    <button onclick="checkDOB()">Let's Go!</button>
+  </div>
+</div>
+
+<!-- Message -->
+<div class="container message" id="birthdayMessage">
+  <h1><i class="fas fa-birthday-cake"></i> Happy Birthday!</h1>
+  <p>Finally the day has arrived, which is today! Yeay~ Yeay~ Yeay~ Happy 23nd birthday! :D</p>
+  <p>I hope that at the age of 23 and the following days, the moon and stars always shine for your dreams.</p>
+  <p>It's time to dream and shine!</p>
+    <img src="hbd.jpg" alt="Birthday Art" class="dreamy-image">
+</div>
+
+<!-- Gallery -->
+<div class="container gallery" id="gallerySection">
+  <h2 class="icon-title"><i class="fas fa-photo-video"></i> Memories Gallery</h2>
+  <div class="gallery-flex">
+    <h3 style="width: 100%; text-align: center;"><i class="fas fa-image"></i> Images:</h3>
+    <img src="image1.jpg" alt="Memory 1" class="zoomable" />
+    <img src="image2.jpg" alt="Memory 2" class="zoomable" />
+    <img src="image3.jpg" alt="Memory 3" class="zoomable" />
+    <img src="image4.jpg" alt="Memory 4" class="zoomable" />
+    <img src="image5.jpg" alt="Memory 5" class="zoomable" />
+    <img src="image6.jpg" alt="Memory 6" class="zoomable" />
+
+    <h3 style="width: 100%; text-align: center;"><i class="fas fa-video"></i> Videos:</h3>
+    <video class="zoomable-video" preload="metadata" poster="preview1.jpeg">
+      <source src="video1.mp4" type="video/mp4" />
+    </video>
+    <video class="zoomable-video" preload="metadata" poster="preview2.jpeg">
+      <source src="video2.mp4" type="video/mp4" />
+    </video>
+  </div>
+</div>
+
+<!-- Special Video -->
+<div class="container video" id="videoSection">
+  <h2 class="icon-title"><i class="fas fa-video"></i> Special Video:</h2>
+  <video class="zoomable-video" preload="metadata" poster="preview3.jpg">
+  <source src="special-video.mp4" type="video/mp4" />
+</div>
+
+<!-- Personal Message -->
+<div class="container personal" id="personalMessage">
+  <h2 class="icon-title"><i class="fas fa-heart"></i> My Message:</h2>
+  <p>Thank you, thank you very much again.</p>
+  
+  <p>Thank you for your help and time, you have accompanied me until I was completely healed and until I could return to my hobby again. With that I can go back to the gym and reunite with my friends there, until I meet new people and become friends.</p>
+  
+  <p>This is all thanks to the help of God Almighty and permission from my parents, your time and my patience to wait for the right time. Previously I was only at home all day for more than 1 year, I only ate, slept, played games, in short like this:
+  
+  <p>Eat, Sleep Game, Repeat. That's all I can do 😂</p>
+  
+  <p>I used to feel very broken, down and sad, because I couldn't do anything, sometimes I woke up at 5 am then went out and looked at the sky until the sun rose and prayed to get well soon, at that time it was my hardest time, everything was destroyed be it spirit, strength and dreams. But you don't need to worry now those times are over now I am very happy.</p>
+  
+  <p>Since your appearance even though it was only in the game and the internet and we talked or told stories like normal, I feel a little happier and more excited, without us realizing it we also made an indirect emotional bonds as time went by. Previously I only thought of you as a normal friend like on the friend list in the game, you could say like an acquaintance and talk for a while then leave, well you know what that's like.</p>
+  
+  <p>That's why I didn't really care at that time, I just helped you then left and didn't really expect to get new friends, I just hoped to get well soon, that's all there is nothing else but healing. But I realized something, you are very different from the others you are smart and you are kind, "You are the light in the darkness when I am lost."</p>
+  
+  <p>You can also call me anything, or think of me as anything, it doesn't matter to me, what I want from you is just to take care of your health and yourself, take care of your diet, your lifestyle, exercise so that your body becomes fitter and healthier, if you feel like you're missing something it means your health is bad, I hope the disease you suffer from can be completely cured and you can do things freely.</p>
+  
+  <p>I hope all these messages can answer all the questions you have, although there are some questions that have not been answered I apologize, you can also ask me or tell me something I will listen and answer it. One more thing there are some things that are different from the two of us, one of which is you talk more when using the mic and I use more messages/texts on the application and it is very different but it is funny and complements each other, and some things that make it difficult for us to communicate directly because of language factors, I have a little difficulty in pronouncing it clearly.</p>
+  
+  <p>And this is all I can give you, your birthday present and the questions you have, although it looks simple and may not be very good and I hope you like it, sorry if the video is bad I'm not very good at editing and my phone is slow so it's not very smooth when I record the screen and the web display of happy birthday greetings and the words I gave may not be very accurate translator, Thank you for reading the entire contents of this message.</p>
+
+  <p>I will never forget you,
+  I love you,<p/>
+  
+  <img src="me.jpg" alt="Birthday Visual" class="message-image">
+  <p>Evan Han</p>
+  
+  <h3>Happy Birthday!</h3>
+</div>
+
+<!-- Modal Zoom -->
+<div id="mediaModal">
+  <span onclick="closeModal()">&times;</span>
+  <img id="modalImg" style="display:none;" />
+  <video id="modalVideo" controls style="display:none;">
+    <source id="modalVideoSrc" src="" type="video/mp4" />
+  </video>
+</div>
+
+<!-- Background Music -->
+<audio id="bgMusic" src="happy-birthday-to-you.mp3" loop hidden></audio>
+
+<!-- Toast Container -->
+<div id="toastContainer"></div>
+
+<script>
+  function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.getElementById('toastContainer').appendChild(toast);
+
+    setTimeout(() => {
+      toast.remove();
+    }, 3000);
+  }
+
+  function checkDOB() {
+    const input = document.getElementById('dobInput').value;
+    if (input === '2002-06-20') {
+      document.querySelector('.auth-wrapper').style.display = 'none';
+      document.getElementById('birthdayMessage').style.display = 'block';
+      document.getElementById('gallerySection').style.display = 'block';
+      document.getElementById('videoSection').style.display = 'block';
+      document.getElementById('personalMessage').style.display = 'block';
+
+      const music = document.getElementById('bgMusic');
+      music.play().catch(() => {
+        console.log('Autoplay blocked.');
+      });
+    } else {
+      showToast("Hmm... Try again");
+    }
+  }
+
+  // Stars background
+  const starsContainer = document.querySelector('.stars');
+  for (let i = 0; i < 100; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    star.style.top = Math.random() * 100 + '%';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.animationDuration = (1 + Math.random() * 3) + 's';
+    starsContainer.appendChild(star);
+  }
+
+  // Zoom image
+  document.querySelectorAll('.zoomable').forEach(img => {
+    img.addEventListener('click', () => {
+      const modal = document.getElementById('mediaModal');
+      const modalImg = document.getElementById('modalImg');
+      const modalVideo = document.getElementById('modalVideo');
+      modal.style.display = 'flex';
+      modalImg.src = img.src;
+      modalImg.style.display = 'block';
+      modalVideo.style.display = 'none';
+    });
+  });
+
+  // Zoom video
+  document.querySelectorAll('.zoomable-video').forEach(video => {
+    video.addEventListener('click', () => {
+      const modal = document.getElementById('mediaModal');
+      const modalImg = document.getElementById('modalImg');
+      const modalVideo = document.getElementById('modalVideo');
+      const source = document.getElementById('modalVideoSrc');
+      modal.style.display = 'flex';
+      modalImg.style.display = 'none';
+      modalVideo.style.display = 'block';
+      source.src = video.querySelector('source').src;
+      modalVideo.load();
+    });
+  });
+
+  function closeModal() {
+    document.getElementById('mediaModal').style.display = 'none';
+    document.getElementById('modalVideo').pause();
+  }
+
+  // Video Play effect
+  document.querySelectorAll('video').forEach(video => {
+    video.addEventListener('play', () => {
+      video.classList.add('playing');
+    });
+    video.addEventListener('pause', () => {
+      video.classList.remove('playing');
+    });
+  });
+
+</script>
+</body>
+</html>
